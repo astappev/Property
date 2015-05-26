@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:sec="http://www.springframework.org/security/tags">
+
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Home page" icon="ui-icon-document" outcome="/index"/>
+            <p:menuitem value="About us" icon="ui-icon-document" outcome="/about"/>
+            <p:submenu label="Example Pages" icon="ui-icon-folder-open">
+                <p:menuitem value="User-only page" icon="ui-icon-document" outcome="/user/index"/>
+                <p:menuitem value="Admin-only page" icon="ui-icon-document" outcome="/admin/index"/>
+            </p:submenu>
+
+            <f:facet name="options">
+                <p:outputPanel rendered="#{!sec:areAnyGranted('ROLE_USER')}">
+                    <p:button  value="Log In" icon="ui-icon-gear" outcome="/login"/>
+                    <p:button  value="Register" icon="ui-icon-gear" outcome="/register"/>
+                </p:outputPanel>
+                <p:outputPanel rendered="#{sec:areAnyGranted('ROLE_USER')}">
+                    <h:outputText style="margin-right:15px" value="Hello, #{userManager.currentEmail()}."/>
+                    <p:commandButton value="Logout" id="logout" icon="ui-icon-gear" action="#{userController.logout}"/>
+                </p:outputPanel>
+            </f:facet>
+        </p:menubar>
+    </h:form>
+
+</ui:composition>

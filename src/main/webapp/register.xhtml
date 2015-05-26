@@ -1,0 +1,79 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <div style="padding-left: 15px; padding-right: 15px">
+
+            <p>Registration page</p>
+
+            <p:panel header="Login">
+                <p:fragment autoUpdate="true">
+                    <h:form id="loginForm" prependId="false">
+                        <p:panelGrid styleClass="panelGridNoBorder">
+                            <p:row>
+                                <p:column><p:outputLabel for="name" value="Name"/></p:column>
+                                <p:column>
+                                    <p:inputText id="name" required="true" value="#{userController.registerForm.name}" requiredMessage="Please enter your name">
+                                        <f:validateLength minimum="3" maximum="255" />
+                                    </p:inputText>
+                                </p:column>
+                                <p:column><h:message for="name"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel for="phone" value="Phone"/></p:column>
+                                <p:column>
+                                    <p:inputMask id="phone" required="false" value="#{userController.registerForm.phone}" requiredMessage="Please enter your phone number" mask="38 (999) 999-99-99" />
+                                </p:column>
+                                <p:column><h:message for="phone"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel for="email" value="Email"/></p:column>
+                                <p:column>
+                                    <p:inputText id="email" required="true" value="#{userController.registerForm.email}" requiredMessage="Please enter your email" validatorMessage="#{userController.registerForm.email} is not valid" name="inTxtPasswordNm">
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <f:validateLength minimum="5" maximum="128" />
+                                    </p:inputText>
+                                </p:column>
+                                <p:column><h:message for="email"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel for="password" value="Password"/></p:column>
+                                <p:column>
+                                    <p:password id="password" required="true" value="#{userController.registerForm.password}" match="password_confirmation" requiredMessage="Please enter password" name="inTxtPasswordNm">
+                                        <f:validateLength minimum="4" maximum="32" />
+                                    </p:password>
+                                </p:column>
+                                <p:column><h:message for="password"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel for="password_confirmation" value="Confirm Password"/></p:column>
+                                <p:column>
+                                    <p:password id="password_confirmation" required="true" value="#{userController.registerForm.passwordConfirm}" requiredMessage="Please re-enter your password" name="inTxtPasswordNm">
+                                        <f:validateLength minimum="4" maximum="32" />
+                                    </p:password>
+                                </p:column>
+                                <p:column><h:message for="password_confirmation"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3">
+                                    <h:commandButton id="btnLoginId" value="Register" action="#{userController.register}" styleClass="loginPanelBtn" />
+                                    <h:commandButton type="reset" value="Reset" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3"><h:messages globalOnly="true"/></p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+                </p:fragment>
+            </p:panel>
+
+        </div>
+    </ui:define>
+
+</ui:composition>

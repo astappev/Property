@@ -1,0 +1,54 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <div style="padding-left: 15px; padding-right: 15px">
+
+            <p>Hello, guest. The page you requested is protected. Please enter your credentials to gain access.</p>
+
+            <p:panel header="Login">
+                <p:fragment autoUpdate="true">
+                    <h:form id="loginForm" prependId="false">
+                        <p:panelGrid styleClass="panelGridNoBorder">
+                            <p:row>
+                                <p:column><p:outputLabel for="userEmail" value="Email"/></p:column>
+                                <p:column>
+                                    <p:inputText id="userEmail" required="true" value="#{userController.loginForm.email}" requiredMessage="Please enter email">
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <f:validateLength minimum="5" maximum="128" />
+                                    </p:inputText>
+                                </p:column>
+                                <p:column><h:message for="userEmail"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column><p:outputLabel for="userPassword" value="Password"/></p:column>
+                                <p:column>
+                                    <p:password id="userPassword"  required="true" value="#{userController.loginForm.password}" requiredMessage="Please enter password" name="inTxtPasswordNm">
+                                        <f:validateLength minimum="4" maximum="32" />
+                                    </p:password>
+                                </p:column>
+                                <p:column><h:message for="userPassword"/></p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3">
+                                    <h:commandButton id="btnLoginId" value="Login" action="#{userController.login}" styleClass="loginPanelBtn" />
+                                    <h:commandButton id="btnRegisterId" value="Register" action="/register?faces-redirect=true" styleClass="loginPanelBtn" immediate="true" update="loginFormId" />
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="3"><h:messages globalOnly="true"/></p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+                </p:fragment>
+            </p:panel>
+
+        </div>
+    </ui:define>
+
+</ui:composition>
